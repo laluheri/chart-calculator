@@ -10,6 +10,13 @@ use App\Charts\SampleChart;
 
 class chartController extends Controller
 {
+    function hours_float($val){
+        if(empty($val)){
+            return 0;
+        }
+        $parts = explode(':', $val);
+        return $parts[0]+floor(($parts[1]/60)*100)/100;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +27,12 @@ class chartController extends Controller
     
         $response = Http::get('http://localhost:3000/api/time_access');
         $time = $response->json()['total_time'];
+        $parts = explode(':', $time);
+        $now = $parts[0]+floor(($parts[1]/60)*100)/100;
+        
         $chart = new SampleChart;
         $chart->labels(['Jan', 'Feb', 'Mar', 'Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']);
-        $chart->dataset('Waktu Akses/Jam', 'bar', [$time]);
+        $chart->dataset('Waktu Akses/Jam', 'bar', [$now]);
        
        
 
