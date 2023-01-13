@@ -24,14 +24,16 @@ class chartController extends Controller
      */
     public function index()
     {
-    
-        $response = Http::get('http://localhost:3000/api/time_access');
+        $month = ['Jan', 'Feb', 'Mar', 'Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        $response = Http::get('http://localhost:3000/api/long_time');
         $time = $response->json()['total_time'];
         $parts = explode(':', $time);
-        $now = $parts[0]+floor(($parts[1]/60)*100)/100;
+        // $now = $parts[0]+floor(($parts[1]/60)*100)/100;
+        // dd($parts[0]+floor(($parts[1]/60)));
+        $now = $parts[0]+floor(($parts[1]/60));
         
         $chart = new SampleChart;
-        $chart->labels(['Jan', 'Feb', 'Mar', 'Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des']);
+        $chart->labels($month);
         $chart->dataset('Waktu Akses/Jam', 'bar', [$now]);
        
        
