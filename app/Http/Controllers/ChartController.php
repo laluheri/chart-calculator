@@ -27,13 +27,13 @@ class chartController extends Controller
         $month = ['Jan', 'Feb', 'Mar', 'Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
         $response = Http::get('http://localhost:3000/api/time_access');
         $time = $response->json()['total_time'];
-        $data=[];
+        $data=([]);
         for ($i=0; $i < 1; $i++) { 
             array_push($data,$time[$i]['total_in_minutes']);
         }
         $chart = new SampleChart;
         $chart->labels($month);
-        $chart->dataset('Waktu Akses/Minutes', 'bar', [$data[0]]);
+        $chart->dataset('Waktu Akses/Minutes', 'bar', $data);
         return view('chart', ['chart' => $chart]);
     }
 
